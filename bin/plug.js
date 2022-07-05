@@ -5,7 +5,7 @@ const plug = require('../index.js');
 
 // Try to use the local node modules plug-pipeline if available
 try {
-    plug = require('@bliles/plug-pipeline');
+    plug = require(process.cwd() + '/node_modules/@bliles/plug-pipeline');
 } catch {}
 
 if (!fs.existsSync('./pipeline.js')) {
