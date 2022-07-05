@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
-const plug = require('../index.js');
+let plug = require('../index.js');
 
 // Try to use the local node modules plug-pipeline if available
 try {
