@@ -1,0 +1,22 @@
+{
+  "name": "plug-pipeline",
+  "version": "0.1.0",
+  "description": "Promise based task runner",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bliles/plug-pipeline.git"
+  },
+  "author": "Brandon Liles",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bliles/plug-pipeline/issues"
+  },
+  "homepage": "https://github.com/bliles/plug-pipeline#readme",
+  "dependencies": {
+    "glob": "^8.0.3"
+  }
+}
