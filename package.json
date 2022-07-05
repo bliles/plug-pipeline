@@ -1,6 +1,6 @@
 {
   "name": "@bliles/plug-pipeline",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Promise based task runner",
   "main": "index.js",
   "scripts": {

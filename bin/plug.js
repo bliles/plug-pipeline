@@ -1,7 +1,12 @@
 #!/usr/bin/env node
 
-const plug = require('../index.js');
 const fs = require('fs');
+const plug = require('../index.js');
+
+// Try to use the local node modules plug-pipeline if available
+try {
+    plug = require('@bliles/plug-pipeline');
+} catch {}
 
 if (!fs.existsSync('./pipeline.js')) {
     throw new Error('Missing pipeline.js, please create your pipeline.');
