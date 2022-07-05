@@ -1,5 +1,5 @@
 {
-  "name": "plug-pipeline",
+  "name": "@bliles/plug-pipeline",
   "version": "0.1.0",
   "description": "Promise based task runner",
   "main": "index.js",
@@ -18,5 +18,15 @@
   "homepage": "https://github.com/bliles/plug-pipeline#readme",
   "dependencies": {
     "glob": "^8.0.3"
-  }
+  },
+  "bin": {
+    "plug": "bin/plug.js"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "Promise",
+    "based",
+    "task",
+    "runner"
+  ]
 }

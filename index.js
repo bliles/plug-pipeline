@@ -1,3 +1,4 @@
+const { existsSync } = require('fs');
 const fs = require('fs').promises;
 const path = require('path');
 const glob = require('glob');
@@ -70,8 +71,7 @@ module.exports = {
                         await fs.mkdir(newPath, { recursive: true });
                     } else {
                         const parent = path.dirname(newPath);
-                        const parentExists = await fs.exists(parent);
-                        if (!parentExists) {
+                        if (!existsSync(parent)) {
                             await fs.mkdir(parent, { recursive: true });
                         }
 
