@@ -2,6 +2,7 @@ const { existsSync } = require('fs');
 const fs = require('fs').promises;
 const path = require('path');
 const glob = require('glob');
+const chokidar = require('chokidar');
 
 const tasks = {};
 
@@ -81,5 +82,8 @@ module.exports = {
                 resolve();
             });
         });
-    }
+    },
+    watch: (path, callback) => {
+        chokidar.watch(path).on('change', callback);
+    },
 }
