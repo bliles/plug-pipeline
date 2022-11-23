@@ -6,6 +6,18 @@ const chokidar = require('chokidar');
 
 const tasks = {};
 
+function globPromise (src) {
+    src = src.replace(/\\/g, '/');
+    return new Promise((resolve, reject) => {
+        glob(src, (error, files) => {
+            if (error) {
+                reject(error);
+            }
+            resolve(files);
+        })
+    });
+}
+
 module.exports = {
     task(name, definition) {
         if (Array.isArray(definition)) {
@@ -56,34 +68,31 @@ module.exports = {
         }
         console.log(`Finished ${name}...`);
     },
-    copy: (src, dest, base) => {
-        return new Promise((resolve, reject) => {
-            glob(src, async (error, files) => {
-                if (error) {
-                    reject(error);
+    copy: async (src, dest, base) => {
+        src = path.resolve(src);
+        dest = path.resolve(dest);
+        base = base ? base.replace(/\\/g, '/') : base;
+
+        var files = await globPromise(src);
+
+        for (let i = 0; i < files.length; i++) {
+            const f = files[i];
+            const newPath = path.join(dest, (base ? f.replace(base, '') : path.basename(f)));
+            const stat = await fs.lstat(f);
+            if (stat.isDirectory()) {
+                await fs.mkdir(newPath, { recursive: true });
+            } else {
+                const parent = path.dirname(newPath);
+                if (!existsSync(parent)) {
+                    await fs.mkdir(parent, { recursive: true });
                 }
 
-                for (let i = 0; i < files.length; i++) {
-                    const f = files[i];
-                    const newPath = dest + "/" + (base ? f.replace(base, '') : path.basename(f));
-
-                    const stat = await fs.lstat(f);
-                    if (stat.isDirectory()) {
-                        await fs.mkdir(newPath, { recursive: true });
-                    } else {
-                        const parent = path.dirname(newPath);
-                        if (!existsSync(parent)) {
-                            await fs.mkdir(parent, { recursive: true });
-                        }
-
-                        await fs.copyFile(f, newPath);
-                    }
-                }
-                resolve();
-            });
-        });
+                await fs.copyFile(f, newPath);
+            }
+        }
     },
     watch: (path, callback) => {
         chokidar.watch(path).on('change', callback);
     },
+    glob: globPromise,
 }
